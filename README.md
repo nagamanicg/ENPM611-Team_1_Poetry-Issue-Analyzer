@@ -1,17 +1,17 @@
 # ENPM611 Project Application Template
+This project involves developing an application that analyzes GitHub issues from the Poetry open-source project to generate meaningful insights. The application retrieves data from a JSON file (poetry_issues.json) and performs detailed analyses to identify trends, highlight key contributors, and categorize issue types—providing a comprehensive view of the project’s ongoing activity and user engagement.
 
-This is the template for the ENPM611 class project. Use this template in conjunction with the provided data to implement an application that analyzes GitHub issues for the [poetry](https://github.com/python-poetry/poetry/issues) Open Source project and generates interesting insights.
+The application includes several core modules:
 
-This application template implements some of the basic functions:
+`data_loader.py` – A utility that loads issues from the provided data file and returns them in a structured runtime format (e.g., as Python objects).
 
-- `data_loader.py`: Utility to load the issues from the provided data file and returns the issues in a runtime data structure (e.g., objects)
-- `model.py`: Implements the data model into which the data file is loaded. The data can then be accessed by accessing the fields of objects.
-- `config.py`: Supports configuring the application via the `config.json` file. You can add other configuration paramters to the `config.json` file.
-- `run.py`: This is the module that will be invoked to run your application. Based on the `--feature` command line parameter, one of the three analyses you implemented will be run. You need to extend this module to call other analyses.
+`model.py` – Defines the data model into which the JSON file is loaded, allowing convenient access to issue attributes through object fields.
 
-With the utility functions provided, you should focus on implementing creative analyses that generate intersting and insightful insights.
+`config.py` – Handles configuration parameters for the application using the config.json file. Additional configuration options can be added as needed.
 
-In addition to the utility functions, an example analysis has also been implemented in `example_analysis.py`. It illustrates how to use the provided utility functions and how to produce output.
+`run.py` – The main entry point for running the application. Based on the --feature command-line argument, it executes one of the implemented analyses. This module can be extended to integrate additional analytical features.
+
+An example analysis is provided in `example_analysis.py`, which demonstrates how to use the utility modules and how to generate analytical outputs.
 
 ## Setup
 
@@ -40,6 +40,33 @@ python run.py --feature 0
 ```
 
 That will output basic information about the issues to the command line.
+
+## Feature 4 - Resolution Time Analyser
+
+This feature analyzes how specific GitHub issue events such as labeling and assignment influence the overall resolution time of issues.
+The goal is to identify patterns that reveal which early actions help close issues faster and which may introduce delays.
+
+Insights:
+1. A negative trendline slope indicates that earlier labeling or assignment correlates with faster resolution.
+2. If the slope is flat or positive, it suggests that these events may not strongly influence closure speed.
+3. This analysis helps maintainers prioritize when to apply labels or assign owners to improve triage efficiency.
+### Run feature 4
+```
+python run.py --feature 4
+```
+
+#### Sample outputs:
+### Figure 1 – Impact of Labeling Time on Issue 
+![Impact of Labeling Time](images/feature4/AssigmentTimevsResolutiontime.png)
+
+Each point represents an issue. The x-axis shows how many days after creation it was labeled, and the y-axis shows how long the issue took to resolve.
+A negative slope in the trendline indicates that issues labeled earlier tend to close faster, suggesting that early triage improves efficiency.
+
+### Figure 2 – Impact of Labeling Time on Issue 
+![Impact of Labeling Time](images/feature4/labellingTimevsResolutiontime.png)
+
+This plot compares the time to first assignment with total resolution time.
+A visible downward trend suggests that assigning an issue to a developer sooner often correlates with shorter resolution durations, emphasizing the importance of prompt ownership.
 
 
 ## VSCode run configuration
