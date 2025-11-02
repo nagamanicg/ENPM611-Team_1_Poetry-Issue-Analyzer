@@ -10,6 +10,7 @@ import argparse
 import config
 from example_analysis import ExampleAnalysis
 from resolution_time_analyser import ResolutionTimeAnalyser
+from most_active_categories_analyser import MostActiveCategoriesAnalyser
 
 def parse_args():
     """
@@ -35,7 +36,22 @@ def parse_args():
     ap.add_argument('--label', '-l', type=str, required=False,
                     help='Optional parameter for analyses focusing on a specific label')
     
+    ap.add_argument("--year", type=int, default=None,
+                    help="Single year to analyze (e.g., 2024). Defaults to latest year in data.")
+    ap.add_argument("--start-year", type=int, required=False,
+                    help="Start of year range (use with --end-year).")
+    ap.add_argument("--end-year", type=int, required=False,
+                    help="End of year range (use with --start-year).")
+    ap.add_argument("--top", type=int, default=5,
+                    help="How many top issues to show (default: 5).")
+    ap.add_argument("--type", type=str, required=False,
+                    help="Filter by issue type: Bug, Feature, Docs, Dependency, Infra, Other. Comma-separated allowed.")
+    ap.add_argument("--labels", type=str, required=False,
+                    help="Filter by raw labels (comma-separated, case-insensitive substring).")
+
+    
     return ap.parse_args()
+
 
 
 
@@ -48,7 +64,14 @@ config.overwrite_from_args(args)
 if args.feature == 0:
     ExampleAnalysis().run()
 elif args.feature == 1:
-    pass # TODO call first analysis
+    MostActiveCategoriesAnalyser().run(
+       year=args.year,
+        start_year=args.start_year,
+        end_year=args.end_year,
+        top_n=args.top,
+        filter_type=args.type,
+        filter_labels=args.labels,
+    )
 elif args.feature == 2:
     pass # TODO call second analysis
 elif args.feature == 3:
