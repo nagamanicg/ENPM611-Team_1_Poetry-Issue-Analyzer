@@ -117,6 +117,77 @@ For each event type:
 
 This balances different event types and highlights issues with broad engagement, not just a single spiky metric.
 
+## Feature 2 – Multi-Area Impact Analyzer (R4 Analysis)
+
+This feature identifies and analyzes GitHub issues that impact multiple areas of the application simultaneously. By examining issues with multiple "area/" labels, it helps maintainers understand which problems have the broadest scope and which areas of the codebase are most frequently involved in complex, cross-cutting issues.
+
+### What it analyzes
+
+**Multi-Area Issues**: Issues containing more than one label starting with "area/" (e.g., area/cli, area/core, area/docs).
+
+**Impact Ranking**: Issues are ranked by the number of different areas they affect, with higher area counts indicating broader impact.
+
+**Area Vulnerability**: Identifies which areas are most frequently involved in multi-area issues, highlighting potential architectural concerns or areas needing attention.
+
+### Key insights
+
+- **High-Impact Issues**: Surface issues that affect multiple components, requiring coordinated fixes across teams.
+- **Architectural Hotspots**: Identify areas that frequently appear in multi-area issues, suggesting tight coupling or shared dependencies.
+- **Cross-Team Coordination**: Help project managers understand which issues may require collaboration between multiple area owners.
+- **Timeline Analysis**: Track how multi-area complexity evolves over time.
+
+### Interactive Timeline Selection
+
+The analyzer provides an interactive menu for selecting the analysis timeframe:
+1. Last 3 months
+2. Last 6 months  
+3. Last 12 months
+4. Last 18 months
+5. Last 24 months
+6. All time
+
+### Run feature 2
+```
+python3 run.py --feature 2
+```
+
+The analyzer will prompt you to select a timeline and then provide:
+
+#### Standard Output Results:
+- **Top 10 Highest Impact Issues**: Ranked by number of areas affected
+- **Area Impact Ranking**: Which areas appear most frequently in multi-area issues  
+- **Summary Statistics**: Total areas affected, average areas per issue, maximum complexity
+- **Most Impacted Area**: The area involved in the most multi-area issues
+
+#### Visual Charts:
+- **Top 10 Most Impacted Areas**: Bar chart showing which areas are most frequently involved
+- **Distribution of Multi-Area Impact**: Histogram of how many areas issues typically affect
+- **Issue State Distribution**: Pie chart showing open vs closed status of multi-area issues
+- **Timeline Trend**: Line chart showing multi-area issue creation over time
+
+### Example Usage
+
+```bash
+python run.py --feature 2
+# Select option 3 (Last 12 months) when prompted
+```
+
+### Demo Mode
+
+For testing or demonstration purposes, you can also run:
+```bash
+python demo_multi_area.py
+```
+
+This will automatically analyze multiple timeframes without interactive prompts.
+
+### Typical Insights
+
+- Issues affecting 3+ areas often indicate architectural decisions or major features requiring cross-team coordination
+- Areas that frequently appear together in multi-area issues may have tight coupling that could benefit from refactoring
+- A high volume of multi-area issues in recent months might suggest increasing system complexity
+- Closed multi-area issues can provide examples of successful cross-team collaboration patterns
+
 ## Feature 4 - Resolution Time Analyser
 
 This feature analyzes how specific GitHub issue events such as labeling and assignment influence the overall resolution time of issues.

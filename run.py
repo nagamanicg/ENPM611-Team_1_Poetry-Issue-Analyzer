@@ -12,6 +12,7 @@ from example_analysis import ExampleAnalysis
 from resolution_time_analyser import ResolutionTimeAnalyser
 from top_user_activity import TopUserActivityAnalyser
 from most_active_categories_analyser import MostActiveCategoriesAnalyser
+from multi_area_impact import MultiAreaImpactAnalyzer
 
 def parse_args():
     """
@@ -74,7 +75,7 @@ elif args.feature == 1:
         filter_labels=args.labels,
     )
 elif args.feature == 2:
-    pass # TODO call second analysis
+    MultiAreaImpactAnalyzer().run()
 elif args.feature == 3:
     TopUserActivityAnalyser().run()
 elif args.feature == 4:
