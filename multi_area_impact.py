@@ -116,7 +116,7 @@ class MultiAreaImpactAnalyzer:
         timeline_text = f"Last {timeline_months} months" if timeline_months > 0 else "All time"
         
         # Create figure with subplots
-        fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(16, 12))
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6))
         fig.suptitle(f'Multi-Area Impact Analysis - {timeline_text}', fontsize=16, fontweight='bold')
         
         # 1. Top 10 Areas by Multi-Area Impact Count
@@ -136,41 +136,15 @@ class MultiAreaImpactAnalyzer:
             for i, count in enumerate(counts):
                 ax1.text(count + 0.1, i, str(count), va='center', fontweight='bold')
         
-        # 2. Distribution of Area Count per Issue
-        area_counts = [issue['area_count'] for issue in multi_area_issues]
-        if area_counts:
-            ax2.hist(area_counts, bins=range(2, max(area_counts) + 2), 
-                    color='lightcoral', edgecolor='darkred', alpha=0.7)
-            ax2.set_xlabel('Number of Areas per Issue')
-            ax2.set_ylabel('Number of Issues')
-            ax2.set_title('Distribution of Multi-Area Impact')
-            ax2.grid(axis='y', alpha=0.3)
-        
-        # 3. Issue State Distribution
+        # 2. Issue State Distribution
         states = [issue['state'] for issue in multi_area_issues]
         if states:
             state_counts = pd.Series(states).value_counts()
             colors = ['lightgreen' if state == 'closed' else 'orange' for state in state_counts.index]
             
-            ax3.pie(state_counts.values, labels=[s.capitalize() for s in state_counts.index], 
+            ax2.pie(state_counts.values, labels=[s.capitalize() for s in state_counts.index], 
                    autopct='%1.1f%%', colors=colors, startangle=90)
-            ax3.set_title('Multi-Area Issues by State')
-        
-        # 4. Timeline of Multi-Area Issues
-        issues_with_dates = [issue for issue in multi_area_issues if issue['created_date']]
-        if issues_with_dates:
-            dates = [issue['created_date'] for issue in issues_with_dates]
-            df = pd.DataFrame({'date': dates})
-            df['month'] = df['date'].dt.to_period('M')
-            monthly_counts = df['month'].value_counts().sort_index()
-            
-            ax4.plot(monthly_counts.index.astype(str), monthly_counts.values, 
-                    marker='o', linewidth=2, markersize=6, color='purple')
-            ax4.set_xlabel('Month')
-            ax4.set_ylabel('Number of Multi-Area Issues')
-            ax4.set_title('Multi-Area Issues Over Time')
-            ax4.tick_params(axis='x', rotation=45)
-            ax4.grid(alpha=0.3)
+            ax2.set_title('Multi-Area Issues by State')
         
         plt.tight_layout()
         plt.show()
