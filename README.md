@@ -165,6 +165,32 @@ The analyzer will prompt you to select a timeline and then provide:
 - **Issue State Distribution**: Pie chart showing open vs closed status of multi-area issues
 - **Timeline Trend**: Line chart showing multi-area issue creation over time
 
+#### Sample outputs
+
+### Figure 1 – Top 10 Most Impacted Areas
+
+![Top 10 Most Impacted Areas](images/feature2/Top10Impact.png)
+
+Shows which areas of the codebase are most frequently involved in multi-area issues. This helps identify architectural hotspots and areas that may require attention or refactoring.
+
+### Figure 2 – Distribution of Multi-Area Impact
+
+![Distribution of Multi-Area Impact](images/feature2/Distribution.png)
+
+Illustrates how many areas are typically affected by issues. A concentration toward higher numbers indicates increasing system complexity, while lower numbers suggest more localized issues.
+
+### Figure 3 – Issue State Distribution
+
+![Issue State Distribution](images/feature2/IssuesByState.png)
+
+Pie chart showing the proportion of open vs closed issues among those affecting multiple areas. This reveals whether multi-area issues are being resolved or accumulating.
+
+### Figure 4 – Timeline Trend
+
+![Timeline Trend](images/feature2/Overtime.png)
+
+Line chart tracking multi-area issue creation over time. A rising trend may indicate increasing system complexity, while trends can help project managers understand when architectural challenges emerge.
+
 ### Example Usage
 
 ```bash
